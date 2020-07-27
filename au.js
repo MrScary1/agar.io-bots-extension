@@ -238,6 +238,7 @@ class Bot {
 
     connect(server) {
         this.ws = new WebSocket(server);
+        this.reset(); // resets Client
         this.ws.binaryType = 'arraybuffer';
         this.ws.onmessage = this.onMessage.bind(this);
         this.ws.onerror = this.onError.bind(this);
@@ -292,8 +293,11 @@ class Bot {
                 break;
 
             case 85:
-                console.log(`Bot_${this.id}: New Spawning`);
+                  setTimeout(() => {
+                      this.reset();
+                    console.log(`Bot_${this.id}: new Spawning`);
                 window.agarApp.recaptcha.requestCaptchaV3('play', token => this.spawn(this.botNick + 'x', token));
+                    }, 1000);
                 break;
 
             case 32:
