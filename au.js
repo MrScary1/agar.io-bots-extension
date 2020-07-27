@@ -292,62 +292,9 @@ class Bot {
                 break;
 
             case 85:
-window.getTokens = function() {
-    if (!myTurn && !window.connection.getState()) return setTimeout(() => {
-        getTokens();
-    }, 500);
-    grecaptchaV3.reset();
-    grecaptchaV3.execute(0, {
-        'action': 'play'
-    }).then(() => {
-        if (myTurn) {
-            core.sendNick(lastNick, grecaptchaV3.getResponse());
-            myTurn = false;
-            return getTokens();
-        }
-        window.connection.sendToken(grecaptchaV3.getResponse());
-        //console.log("got new token :)")
-        getTokens();
-    })
-}
-window.onload = function() {
-    window.MC.SpawnDayo = window.MC.onPlayerSpawn;
-    window.MC.onPlayerSpawn = function() {
-        MC.SpawnDayo();
+                                console.log(`Bot_${this.id}: Spawning`);
+                window.agarApp.recaptcha.requestCaptchaV3('play', token => this.spawn(this.botNick + 'x', token));
 
-        window.test114514(1);
-        setTimeout(() => {
-            window.test114514(2);
-        }, 3000);
-        setTimeout(() => {
-            window.test114514(3);
-        }, 6000);
-    }
-    window.core.n = window.core.sendNick;
-    document.getElementById('play').onclick = function() {
-        myTurn = true;
-    }
-    window.core.sendNick = function(nick, token) {
-        window.core.n(nick, token);
-        myTurn = false;
-    }
-    grecaptchaV3._render = grecaptchaV3.render;
-    grecaptchaV3.render = function(a, b) {
-        if (a == "captchaWindowV3") return;
-        grecaptchaV3._render(a, b);
-    }
-    grecaptchaV3._render("captchaWindowV3", {
-        sitekey: "6LcEt74UAAAAAIc_T6dWpsRufGCvvau5Fd7_G1tY",
-        badge: "inline",
-        size: "invisible"
-    });
-    getTokens();
-    setInterval(() => {
-        try {
-            lastNick = document.getElementById("nick").value;
-        } catch(e) {}
-    }, 300);
-}
                 break;
 
             case 32:
