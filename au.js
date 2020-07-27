@@ -292,9 +292,10 @@ class Bot {
                 break;
 
             case 85:
-                console.log(`Bot_${this.id}: Captcha failed Disconnecting...`);
-                window.client.spawnedBots--;
-                this.ws.close();
+    setTimeout(() => {
+         console.log(`Bot_${this.id}: Spawning`);
+                window.agarApp.recaptcha.requestCaptchaV3('play', token => this.spawn(this.botNick + 'x', token));
+                    }, 1000);
                 break;
 
             case 32:
